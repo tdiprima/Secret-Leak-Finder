@@ -3,16 +3,9 @@
 My own sanity-checker.  
 A Python CLI tool that checks a repo for dumb security mistakes.
 
-## Install
-
-```bash
-pip install -r requirements.txt
-```
-
 ## Usage
 
 ```bash
-python main.py .
 python main.py /path/to/your/repo
 ```
 
