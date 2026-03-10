@@ -1,35 +1,33 @@
-# repo-sanity
+# 🔎 Secret Leak Finder
 
-A Python CLI tool that checks a repo for dumb security mistakes.  
-With color!
+## Problem
+CI pipelines often run without basic security checks.
 
-## Usage
+## Solution
+This tool scans repositories for common DevSecOps issues before deployment.
+
+Things it detects:
+
+* API keys
+* AWS credentials
+* `.env` files
+* private keys
+* tokens in config files
+
+Example:
 
 ```bash
 python main.py /path/to/your/repo
 ```
 
-## Project Structure
+Output:
 
 ```
-repo-sanity/
-├── main.py                 # Entry point. Orchestrates everything.
-├── scanner.py              # Walks the repo, feeds files to checkers.
-├── printer.py              # Prints colored results. That's it.
-├── results.py              # One tiny data class for findings.
-├── requirements.txt        # Zero dependencies (just stdlib!)
-│
-└── checkers/               # Each file checks ONE type of problem.
-    ├── __init__.py
-    ├── env_file.py         # .env committed?
-    ├── gitignore.py        # Missing .gitignore?
-    ├── api_keys.py         # API keys in source?
-    ├── private_keys.py     # Private keys in source?
-    ├── shell_true.py       # subprocess(shell=True)?
-    ├── debug_prints.py     # print() left in code?
-    └── secret_files.py     # World-readable secret files?
+⚠ Possible AWS key in config/settings.py
+⚠ .env file detected
+✔ No private keys found
 ```
 
-Each checker is independent. Add new ones by dropping a file in `checkers/`.
+Why it's important:
 
-<br>
+To catch leaks before CI or GitHub scanners do.
