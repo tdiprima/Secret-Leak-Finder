@@ -8,13 +8,18 @@ from ..results import Finding
 
 
 def check_env_file(repo_path):
-    """Look for .env files. Return findings."""
+    """Check whether .env is listed in .gitignore. Return findings."""
     findings = []
-    env_path = os.path.join(repo_path, ".env")
+    gitignore_path = os.path.join(repo_path, ".gitignore")
 
-    if os.path.isfile(env_path):
-        findings.append(Finding("WARN", ".env file committed"))
+    if os.path.isfile(gitignore_path):
+        with open(gitignore_path, "r") as fh:
+            lines = [line.strip() for line in fh]
+        if ".env" in lines:
+            findings.append(Finding("OK", ".env is listed in .gitignore"))
+        else:
+            findings.append(Finding("FAIL", ".env is NOT in .gitignore"))
     else:
-        findings.append(Finding("OK", "no .env file found"))
+        findings.append(Finding("FAIL", "no .gitignore file found"))
 
     return findings
